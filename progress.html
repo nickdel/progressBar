@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Progress Bar</title>
+  <style>
+    .progress-bar {
+      width: 300px;
+      height: 20px;
+      border: 1px solid #ccc;
+      /*background-color: #f0f0f0;*/
+      overflow: hidden;
+      display: inline-block; 
+      vertical-align: middle; 
+    }
+
+    .progress-block {
+      height: 100%;
+      background-color: blue;
+      float: left;
+      margin-right: 2px; 
+    }
+
+    .percentage {
+      line-height: 20px; 
+      margin-left: 10px; 
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Progress Bar</h1>
+  <div class="progress-bar" id="progressBar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div><div class="percentage" id="percentage">0%</div> 
+
+  <div id="countdown">Next update in 3 seconds</div>
+  <div id="increment">Increment: </div>
+
+  <span id="queueIdLinkURL" data-bind="text: initialWindowLocation()"></span> 
+
+  <script>
+    var progressBar = document.getElementById("progressBar");
+    var percentageDisplay = document.getElementById("percentage");
+    var countdownDisplay = document.getElementById("countdown");
+    var incrementDisplay = document.getElementById("increment");
+    var queueIdLinkURL = document.getElementById("queueIdLinkURL"); 
+    var progress = 0;
+    var countdown = 3;
+    var maxIncrement = 20; 
+
+    function updateProgressBar() {
+      if (progress <= 100) {
+        var increment = Math.floor(Math.random() * (maxIncrement - 0 + 1)) + 0; 
+        progress += increment;
+
+        if (progress > 100) {
+          progress = 100;
+        }
+
+        progressBar.innerHTML = ""; 
+        var block = document.createElement("div");
+        block.classList.add("progress-block");
+        block.style.width = progress + "%"; 
+        progressBar.appendChild(block);
+
+        progressBar.setAttribute("aria-valuenow", progress); 
+
+        percentageDisplay.textContent = progress + "%";
+
+        incrementDisplay.textContent = "Increment: " + increment + "%";
+
+        var countdownInterval = setInterval(function () {
+          countdown--;
+          countdownDisplay.textContent = "Next update in " + countdown + " seconds";
+          if (countdown == 0) {
+            clearInterval(countdownInterval);
+            countdown = 3;
+            updateProgressBar();
+          }
+        }, 1000);
+
+      }
+	  
+	// Redirect logic moved outside the if block
+      if (progress === 100) { 
+        setTimeout(function () {
+          var random = Math.random();
+          if (random < 0.5) {
+            window.location.href = "Success.html";
+          } else {
+            window.location.href = "Fail.html";
+          }
+        }, 5000);
+      }
+	  
+    }
+
+    // Set the URL in the span
+    queueIdLinkURL.textContent = "http://queueItRedirectURL?From=" + window.location.href; 
+
+    updateProgressBar();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Waiting room</title>
+</head>
+<body>
+  <p>Redirecting to queue in <span id="countdown">calculating...</span> seconds</p>
+
+  <script>
+    // Generate a random number of seconds between 0 and n
+    var delay = Math.floor(Math.random() * 30) * 1000; 
+    var secondsRemaining = delay / 1000; // Convert to seconds
+
+    // Get the countdown element
+    var countdownElement = document.getElementById("countdown");
+
+    // Update the countdown every second
+    var countdownInterval = setInterval(function() {
+      secondsRemaining--;
+      countdownElement.textContent = secondsRemaining;
+
+      if (secondsRemaining <= 0) {
+        clearInterval(countdownInterval); // Stop the countdown
+        window.location.href = "progress.html"; // Redirect
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
