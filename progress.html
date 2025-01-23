@@ -49,6 +49,18 @@
     var countdown = 3;
     var maxIncrement = 20; 
 
+	function generateUUID() {
+	  let d = new Date().getTime();
+	  if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+		d += performance.now(); //use high-precision timer if available
+	  }
+	  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		let r = (d + Math.random() * 16) % 16 | 0;
+		d = Math.floor(d / 16);
+		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+	  });
+	}
+
     function updateProgressBar() {
       if (progress <= 100) {
         var increment = Math.floor(Math.random() * (maxIncrement - 0 + 1)) + 0; 
@@ -95,9 +107,11 @@
       }
 	  
     }
+	
+	queueId = generateUUID()
 
     // Set the URL in the span
-    queueIdLinkURL.textContent = "http://queueItRedirectURL?From=" + window.location.href; 
+    queueIdLinkURL.textContent = "https://notglastonbury.seetickets.com/queue/view?c=seeticketsuk&amp;e=20241114glastocoach&amp;ver=javascript-4.3.0&amp;cver=68&amp;man=Glastonbury%20Festival&amp;t=https%3A%2F%2Fglastonbury.seetickets.com%2Fcontent%2Fextras&amp;kupver=akamai-4.3.0&amp;q=" + queueId;
 
     updateProgressBar();
   </script>
