@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Cookie Creation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    function createCookie() {
+      // Generate a random string
+      const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+      // Generate MD5 hash of the random string
+      const md5Hash = CryptoJS.MD5(randomString).toString();
+
+      // Create the cookie string
+      const cookieValue = "sclid=" + md5Hash;
+
+      // Set the cookie
+      document.cookie = "tcGFL_tcc=" + cookieValue + "; path=/";
+
+      console.log("Cookie created: tcGFL_tcc=" + cookieValue);
+    }
+
+    // Call the function when the page loads
+    window.onload = createCookie;
+
+  </script>
 </head>
 
 <body>
