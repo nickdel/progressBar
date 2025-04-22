@@ -12,7 +12,7 @@
       const md5Hash = CryptoJS.MD5(randomString).toString();
 
       // Create the cookie string
-      const cookieValue = "sclid=" + md5Hash;
+      const cookieValue = md5Hash;
 
       // Set the cookie
       document.cookie = "tcGFL_tcc=" + cookieValue + "; path=/";
